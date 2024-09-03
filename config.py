@@ -1,7 +1,9 @@
 class Config:
     debug = False
-    model_name = 'Llama-3.1-8B-Instruct' 
-    model_path = "/opt/local/llm_models/huggingface.co/unsloth/Meta-Llama-3.1-8B-Instruct-bnb-4bit"
+    model_name = "Qwen2-7B"
+    model_path = "/opt/local/llm_models/huggingface.co/Qwen/Qwen2-7B"
+    # model_name = 'Llama-3.1-8B-Instruct' 
+    # model_path = "/opt/local/llm_models/huggingface.co/unsloth/Meta-Llama-3.1-8B-Instruct-bnb-4bit"
     # model_name = 'LLama2-7B-Chat' #'Qwen1.5-7B-Chat' 
     # model_path = 'meta-llama/Llama-2-7b-chat-hf'#'Qwen/Qwen1.5-7B-Chat'
     keep_original_weight = True

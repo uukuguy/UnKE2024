@@ -195,14 +195,14 @@ def execute_batch_unke(
         if config.model_name == 'Llama-3.1-8B-Instruct':
             input_causal_mask,input_position_ids,input_cache_position = get_causal_mask(layer_in_ks,contexts_tok['attention_mask'])
             ex_causal_mask,ex_position_ids,ex_cache_position = get_causal_mask(stat_in,ex_tok['attention_mask'])
-        elif config.model_name == 'Qwen1.5-7B-Chat':
+        elif config.model_name == 'Qwen2-7B':
             input_causal_mask,input_position_ids = get_qwen2_causal_mask(layer_in_ks,contexts_tok['attention_mask'])
             ex_causal_mask,ex_position_ids = get_qwen2_causal_mask(stat_in,ex_tok['attention_mask'])
 
        
         for step in range(config.optim_num_step):
             optimizer.zero_grad()
-            if config.model_name == 'Qwen1.5-7B-Chat':
+            if config.model_name == 'Qwen2-7B':
                 loss = criterion(_layer(stat_in,attention_mask=ex_causal_mask,position_ids=ex_position_ids)[0], stat_out)+ criterion(_layer(layer_in_ks,attention_mask=input_causal_mask,position_ids=input_position_ids)[0], layer_out_ks)
             elif config.model_name == 'Llama-3.1-8B-Instruct':
                 loss = criterion(_layer(stat_in,attention_mask=ex_causal_mask,position_ids=ex_position_ids,cache_position = ex_cache_position)[0], stat_out)+ criterion(_layer(layer_in_ks,attention_mask=input_causal_mask,position_ids=input_position_ids,cache_position=input_cache_position)[0], layer_out_ks)
@@ -334,7 +334,7 @@ if __name__ == "__main__":
             i['para_question'] = get_llama_without_answer(i['para_question'])
             if config.model_name == 'Llama-3.1-8B-Instruct':
                 i['answer'] = i['answer']+'</s>'
-            elif config.model_name == 'Qwen1.5-7B-Chat':
+            elif config.model_name == 'Qwen2-7B':
                 i['answer'] = i['answer']+'<|im_end|>'
 
             i['sub_question'] = get_list_llama_without_answer(i['sub_question'], False)
@@ -372,7 +372,7 @@ if __name__ == "__main__":
             data['para_prediction'] = output[1]
             if config.model_name == 'LLama2-7B-Chat':
                 data['answer'] = data['answer'][:-len('</s>')]
-            elif config.model_name == 'Qwen1.5-7B-Chat':
+            elif config.model_name == 'Qwen2-7B':
                 data['answer'] = data['answer'][:-len('<|im_end|>')]
 
         
